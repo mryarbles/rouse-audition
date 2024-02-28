@@ -1,0 +1,36 @@
+<main class="page">
+  <h1>Calculate Market & Auction Values</h1>
+  <app-nav />
+  <section class="page__container">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <mat-form-field class="page__control" >
+        <mat-label>Enter model id:</mat-label>
+        <input
+          matInput
+          formControlName="modelId"
+          required
+        >
+        <mat-error *ngIf="modelId?.errors" >This field is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="page__control" >
+        <mat-label>Enter model year:</mat-label>
+        <input
+          matInput
+          formControlName="year"
+          type="number"
+          required
+        >
+        <mat-error *ngIf="year?.errors?.['required']" >This field is required.</mat-error>
+        <mat-error *ngIf="year?.errors?.['pattern']">This needs to be a four digit number.</mat-error>
+      </mat-form-field>
+      <button type="submit" mat-flat-button color="primary" class="page__control" [disabled]="this.form.invalid">Calculate</button>
+    </form>
+  </section>
+  <section *ngIf="this.calculatedValues !== null && this.calculatedValues?.success === false" class="page__container page__error">
+    {{ this.calculatedValues?.error }}
+  </section>
+  <section *ngIf="this.calculatedValues !== null && this.calculatedValues?.success === true" class="page__container">
+    <div>Market Value: <strong>${{ this.calculatedValues?.marketValue?.toFixed(2) }}</strong></div>
+    <div>Auction Value: <strong>${{ this.calculatedValues?.auctionValue?.toFixed(2) }}</strong></div>
+  </section>
+</main>

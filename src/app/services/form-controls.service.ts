@@ -6,6 +6,7 @@ import { SelectOption } from 'src/app/types/SelectOption';
 
 export type ValuationResponse = {
   success?: boolean;
+  error?: string;
   marketValue: number;
   auctionValue: number;
 }
@@ -50,13 +51,19 @@ MarketValue = {cost} * {marketRatio}
 AuctionValue = {cost} * {auctionRatio}
  */
   async getValues(modelId: string, year: string): Promise<ValuationResponse> {
+    console.log('form-controls.service.getValues  modelId', modelId, 'year', year);
     const products = await this.ds.getProducts();
     const product = products[modelId];
+
+    if (!modelId || !year) {
+      throw new Error('modelId and year are required');
+    }
 
     // TODO: Maybe we should throw here instead of returning an object with success: false
     if (!product) {
       return {
         success: false,
+        error: 'product not found',
         marketValue: 0,
         auctionValue: 0
       }
