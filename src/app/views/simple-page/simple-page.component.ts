@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 
 import FormControlService, { ValuationResponse }  from '@/services/form-controls.service';
 import NavComponent from '@/components/nav/nav.component';
+import Numbers from 'src/app/utils/Numbers';
 
 export const title = 'Rouse Audition';
 export const path = 'simple';
@@ -77,6 +78,10 @@ export default class SimplePageComponent  {
 
   get year() {
     return this.form.get('year');
+  }
+
+  toDollars(value: number = 0) {
+    return Numbers.toDollars(value);
   }
 
 }

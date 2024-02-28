@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import DataService from './data.service';
 import { ProductDetail } from 'src/app/types/ProductDetail';
 import { SelectOption } from 'src/app/types/SelectOption';
+import Numbers from '@/utils/Numbers';
 
 export type ValuationResponse = {
   success?: boolean;

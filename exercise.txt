@@ -15,7 +15,7 @@ Task #1 - Create a page that has inputs for the model id and year, and displays 
 Task #2 - Add validation to ensure it handles incorrect inputs (EX: ID doesn't exist) graciously, you can do so however you prefer.
 
 Task #3 - Add code to test your function, pass it the parameters below and validate.
-Year 2007 ID 67352, Year 2011 ID 87964
+Year w ID 67352, Year 2011 ID 87964
 
 Add additional functionality as you want.
 

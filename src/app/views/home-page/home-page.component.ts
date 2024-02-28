@@ -15,6 +15,7 @@ import {MatButtonModule} from '@angular/material/button';
 import FormControlService, { ValuationResponse }  from '@/services/form-controls.service';
 import { SelectOption } from '@/types/SelectOption';
 import NavComponent  from '@/components/nav/nav.component';
+import Numbers from '@/utils/Numbers';
 
 export const title = 'Rouse Audition';
 export const path = '';
@@ -118,8 +119,8 @@ export default class HomePageComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.subModelId.unsubscribe();
-    this.subYear.unsubscribe();
+    if (this.subYear) this.subYear.unsubscribe();
+    if (this.subModelId) this.subModelId.unsubscribe();
   }
 
   get modelId() {
@@ -132,5 +133,9 @@ export default class HomePageComponent implements OnInit, OnDestroy {
 
   get other() {
     return this.form.get('other');
+  }
+
+  toDollars(value: number = 0) {
+    return Numbers.toDollars(value);
   }
 }

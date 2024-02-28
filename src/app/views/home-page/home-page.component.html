@@ -31,7 +31,7 @@
     </form>
   </section>
   <section *ngIf="this.calculatedValues !== null" class="home-page__container">
-    <div>Market Value: <strong>${{ this.calculatedValues?.marketValue?.toFixed(2) }}</strong></div>
-    <div>Auction Value: <strong>${{ this.calculatedValues?.auctionValue?.toFixed(2) }}</strong></div>
+    <div>Market Value: <strong>{{ this.toDollars(this.calculatedValues?.marketValue)}}</strong></div>
+    <div>Auction Value: <strong>{{ this.toDollars(this.calculatedValues?.auctionValue) }}</strong></div>
   </section>
 </main>
