@@ -1,0 +1,28 @@
+<main class="home-page">
+  <h1>Calculate Market & Auction Values</h1>
+  <section class="home-page__container">
+    <form (ngSubmit)="onSubmit()">
+      <mat-form-field class="home-page__control">
+        <mat-label>Select model id:</mat-label>
+        <mat-select [formControl]="modelIdControl" required>
+          <mat-option *ngFor="let option of this.modelIdOptions" value="{{ option.value }}">{{ option.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="home-page__control">
+        <mat-label>Select model year:</mat-label>
+        <mat-select [formControl]="yearControl" required>
+          <mat-option *ngFor="let option of this.yearOptions" value="{{ option.value }}">{{ option.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="home-page__control" *ngIf="this.yearControl.value === 'other'">
+        <mat-label>Select other model year:</mat-label>
+        <input matInput placeholder="Other" value="" [formControl]="otherControl" required>
+      </mat-form-field>
+      <button mat-flat-button color="primary" class="home-page__control">Calculate</button>
+    </form>
+  </section>
+  <section *ngIf="this.calculatedValues !== null" class="home-page__container">
+    <div>Market Value: <strong>${{ this.calculatedValues?.marketValue?.toFixed(2) }}</strong></div>
+    <div>Auction Value: <strong>${{ this.calculatedValues?.auctionValue?.toFixed(2) }}</strong></div>
+  </section>
+</main>
