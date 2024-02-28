@@ -64,22 +64,19 @@ export default class HomePageComponent implements OnInit, OnDestroy {
   constructor(private fcs: FormControlService) {}
 
   async onSubmit() {
+    // the submit button should be disabled if the form is invalid, but checking anyway
     if (this.form.valid) {
       const id = this.form.value.modelId as string;
       const year = this.form.value.year === 'other' ? this.form.value.other : this.form.value.year;
       try {
         this.calculatedValues = await this.fcs.getValues(id, year as string);
-
         this.form.reset(this.form.getRawValue());
-        this.form.markAsUntouched();
-        this.form.markAsPristine();
-        // this.form.updateValueAndValidity();
-        console.log('form\n', this.form);
+        // this.form.markAsUntouched();
+        // this.form.markAsPristine();
+        console.log('form submit\n', this.form);
       } catch (error) {
         console.error(error);
       }
-    } else {
-      console.log('form is invalid');
     }
   }
 
@@ -90,17 +87,16 @@ export default class HomePageComponent implements OnInit, OnDestroy {
     this.year?.disable();
 
     this.subModelId = this.modelId?.valueChanges.subscribe(async (value: string | null) => {
-      console.log('home-page.component.modelId changed', value);
       this.yearOptions = await this.fcs.getYearOptions(value as string);
       this.year?.enable();
     });
 
     this.subYear = this.year?.valueChanges.subscribe((value: string | null) => {
-      console.log('home-page.component subYear triggered  ');
       if (value === 'other') {
         console.log('adding other');
         const fieldName = 'other';
-        console.log('home-page.component. form before adding new field  ', this.form);
+        // TODO: There is a bug here, where the new field is automatically marked as invalid with required error.
+        //  once the form has been submitted.
         this.form.registerControl(fieldName, new FormControl('', {
           validators: [
             Validators.required,
@@ -109,7 +105,6 @@ export default class HomePageComponent implements OnInit, OnDestroy {
             // Validators.pattern(/^[0-9]{4}$/)
           ]
         }));
-        console.log('home-page.component. form after adding new field  ', this.form);
       } else if (this.form.contains('other')) {
         console.log('removing other');
         this.form.removeControl('other');
